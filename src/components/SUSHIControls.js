@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
-import { Box, Button, ThemeProvider } from '@material-ui/core';
+import { Box, Button, TextareaAutosize, ThemeProvider } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,6 +9,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { runSUSHI } from '../utils/RunSUSHI';
 import './CodeMirrorComponent';
+const zlib = require('zlib');
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -38,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       background: '#385f9c'
     }
+  },
+  textArea: {
+    width: '100%'
   }
 }));
 
@@ -54,18 +58,39 @@ function replacer(key, value) {
   return value;
 }
 
+function encodeFSH(fsh) {
+  const base64 = Buffer.from(fsh, 'utf-8').toString('base64');
+  const compressedBase64 = zlib.deflateSync(fsh).toString('base64');
+  console.log('Base64:', base64);
+  console.log('Compressed Base64', compressedBase64);
+  console.log('Compressed Base64 length', compressedBase64.length);
+  return compressedBase64;
+}
+
 export default function SUSHIControls(props) {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+  const [openConfig, setOpenConfig] = useState(false);
+  const [openShare, setOpenShare] = useState(false);
+  const [link, setLink] = useState();
   const [canonical, setCanonical] = useState('http://example.org');
   const [version, setVersion] = useState('1.0.0');
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleOpenConfig = () => {
+    setOpenConfig(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseConfig = () => {
+    setOpenConfig(false);
+  };
+
+  const handleOpenShare = () => {
+    let shareLink = encodeFSH(props.text);
+    setLink(shareLink);
+    setOpenShare(true);
+  };
+
+  const handleCloseShare = () => {
+    setOpenShare(false);
   };
 
   const updateCanonical = (event) => {
@@ -76,6 +101,11 @@ export default function SUSHIControls(props) {
   const updateVersion = (event) => {
     const newVersion = event.target.value;
     setVersion(newVersion);
+  };
+
+  const updateLink = (event) => {
+    const newLink = event.target.value;
+    setLink(newLink);
   };
 
   //Sets the doRunSUSHI to true
@@ -111,10 +141,13 @@ export default function SUSHIControls(props) {
         <Button className={classes.button} onClick={handleRunClick} testid="Button">
           Run
         </Button>
-        <Button className={classes.secondaryButton} onClick={handleOpen}>
+        <Button className={classes.secondaryButton} onClick={handleOpenConfig}>
           Configuration
         </Button>
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <Button className={classes.secondaryButton} onClick={handleOpenShare}>
+          Share
+        </Button>
+        <Dialog open={openConfig} onClose={handleCloseConfig} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">SUSHI Configuration Settings</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -147,7 +180,27 @@ export default function SUSHIControls(props) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleCloseConfig} color="primary">
+              Done
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={openShare} onClose={handleCloseShare} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">Share</DialogTitle>
+          <DialogContent>
+            <DialogContentText>Use this link to share your fsh with others!</DialogContentText>
+            <TextareaAutosize
+              id="link"
+              disabled
+              margin="dense"
+              label="Your Link"
+              defaultValue={link}
+              onChange={updateLink}
+              className={classes.textArea}
+            ></TextareaAutosize>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseShare} color="primary">
               Done
             </Button>
           </DialogActions>
