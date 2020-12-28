@@ -59,12 +59,7 @@ function replacer(key, value) {
 }
 
 function encodeFSH(fsh) {
-  const base64 = Buffer.from(fsh, 'utf-8').toString('base64');
-  const compressedBase64 = zlib.deflateSync(fsh).toString('base64');
-  console.log('Base64:', base64);
-  console.log('Compressed Base64', compressedBase64);
-  console.log('Compressed Base64 length', compressedBase64.length);
-  return compressedBase64;
+  return zlib.deflateSync(fsh).toString('base64');
 }
 
 export default function SUSHIControls(props) {
@@ -85,12 +80,16 @@ export default function SUSHIControls(props) {
 
   const handleOpenShare = () => {
     let shareLink = encodeFSH(props.text);
-    setLink(shareLink);
+    setLink(`https://fshschool.org/FSHOnline/${shareLink}`);
     setOpenShare(true);
   };
 
   const handleCloseShare = () => {
     setOpenShare(false);
+  };
+
+  const copyToClipboard = () => {
+    console.log('we still need to make this copy functionality');
   };
 
   const updateCanonical = (event) => {
@@ -189,17 +188,22 @@ export default function SUSHIControls(props) {
           <DialogTitle id="form-dialog-title">Share</DialogTitle>
           <DialogContent>
             <DialogContentText>Use this link to share your fsh with others!</DialogContentText>
-            <TextareaAutosize
-              id="link"
-              disabled
-              margin="dense"
-              label="Your Link"
-              defaultValue={link}
-              onChange={updateLink}
-              className={classes.textArea}
-            ></TextareaAutosize>
+            <div>
+              <TextareaAutosize
+                id="link"
+                disabled
+                margin="dense"
+                label="Your Link"
+                defaultValue={link}
+                onChange={updateLink}
+                className={classes.textArea}
+              ></TextareaAutosize>
+            </div>
           </DialogContent>
           <DialogActions>
+            <Button onClick={copyToClipboard} color="primary">
+              Copy to Clipboard
+            </Button>
             <Button onClick={handleCloseShare} color="primary">
               Done
             </Button>
