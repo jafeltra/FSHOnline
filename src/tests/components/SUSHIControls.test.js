@@ -1,6 +1,7 @@
 import React from 'react';
 import * as runSUSHI from '../../utils/RunSUSHI';
 import * as generateLink from '../../utils/GenerateLink';
+import { sliceDependency } from '../../components/SUSHIControls';
 import { act } from 'react-dom/test-utils';
 import { render, wait, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
@@ -97,7 +98,7 @@ it('calls runSUSHI and changes the doRunSUSHI variable onClick, exhibits a good 
   });
 });
 
-it('uses user provided canonical when calling runSUSHI', () => {
+it('uses user provided canonical when calling runSUSHI', async () => {
   const onClick = jest.fn();
   const resetLogMessages = jest.fn();
   const runSUSHISpy = jest.spyOn(runSUSHI, 'runSUSHI').mockReset().mockResolvedValue(goodSUSHIPackage);
@@ -114,8 +115,10 @@ it('uses user provided canonical when calling runSUSHI', () => {
 
   fireEvent.change(canonicalInput, { target: { value: 'http://other.org' } });
 
-  const runButton = getByText('Run');
-  fireEvent.click(runButton);
+  const button = document.querySelector('[testid=Button]');
+  act(() => {
+    button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+  });
 
   const expectedConfig = {
     canonical: 'http://other.org',
@@ -123,10 +126,12 @@ it('uses user provided canonical when calling runSUSHI', () => {
     FSHOnly: true,
     fhirVersion: ['4.0.1']
   };
-  expect(runSUSHISpy).toHaveBeenCalledWith(undefined, expectedConfig); // Includes new config
+  await wait(() => {
+    expect(runSUSHISpy).toHaveBeenCalledWith(undefined, expectedConfig, []); // Includes new config
+  });
 });
 
-it('uses user provided version when calling runSUSHI', () => {
+it('uses user provided version when calling runSUSHI', async () => {
   const onClick = jest.fn();
   const resetLogMessages = jest.fn();
   const runSUSHISpy = jest.spyOn(runSUSHI, 'runSUSHI').mockReset().mockResolvedValue(goodSUSHIPackage);
@@ -143,8 +148,10 @@ it('uses user provided version when calling runSUSHI', () => {
 
   fireEvent.change(canonicalInput, { target: { value: '2.0.0' } });
 
-  const runButton = getByText('Run');
-  fireEvent.click(runButton);
+  const button = document.querySelector('[testid=Button]');
+  act(() => {
+    button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+  });
 
   const expectedConfig = {
     canonical: 'http://example.org',
@@ -152,7 +159,61 @@ it('uses user provided version when calling runSUSHI', () => {
     FSHOnly: true,
     fhirVersion: ['4.0.1']
   };
-  expect(runSUSHISpy).toHaveBeenCalledWith(undefined, expectedConfig); // Includes new version
+
+  await wait(() => {
+    expect(runSUSHISpy).toHaveBeenCalledWith(undefined, expectedConfig, []); // Includes new version
+  });
+});
+
+it('uses user provided dependencies when calling runSUSHI', async () => {
+  const onClick = jest.fn();
+  const resetLogMessages = jest.fn();
+  const runSUSHISpy = jest.spyOn(runSUSHI, 'runSUSHI').mockReset().mockResolvedValue(goodSUSHIPackage);
+
+  const { getByText, getByLabelText } = render(
+    <SUSHIControls onClick={onClick} resetLogMessages={resetLogMessages} />,
+    container
+  );
+
+  const configButton = getByText('Configuration');
+  fireEvent.click(configButton);
+  const dependencyInput = getByLabelText('Dependencies');
+  expect(dependencyInput.value).toEqual(''); // Default
+
+  fireEvent.change(dependencyInput, { target: { value: 'hl7.fhir.us.core#3.1.1, hello#123' } });
+
+  const button = document.querySelector('[testid=Button]');
+  act(() => {
+    button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+  });
+
+  const defaultConfig = { FSHOnly: true, canonical: 'http://example.org', fhirVersion: ['4.0.1'], version: '1.0.0' };
+
+  const expectedDependencyArr = [
+    ['hl7.fhir.us.core', '3.1.1'],
+    ['hello', '123']
+  ];
+
+  await wait(() => {
+    expect(runSUSHISpy).toHaveBeenCalledWith(undefined, defaultConfig, expectedDependencyArr); // Includes new version
+  });
+});
+
+describe('#sliceDependency()', () => {
+  it('should correctly parse a given array of dependencies', () => {
+    const input = 'hl7.fhir.us.core#3.1.1, , testing#123';
+    const returnArr = sliceDependency(input);
+    expect(returnArr).toEqual([
+      ['hl7.fhir.us.core', '3.1.1'],
+      ['testing', '123']
+    ]);
+  });
+
+  it('should correctly parse an empty array of dependencies', () => {
+    const input = '';
+    const returnArr = sliceDependency(input);
+    expect(returnArr).toEqual([]);
+  });
 });
 
 // This test below needs some work. Possibly due to the async nature of generateLink?
