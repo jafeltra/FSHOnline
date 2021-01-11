@@ -1,5 +1,5 @@
 const BitlyClient = require('bitly').BitlyClient;
-const bitly = new BitlyClient(process.env.REACT_APP_BITLY_KEY);
+const bitly = new BitlyClient("810bb3a7a82761255c65e75da623e4ab76b5b065");
 
 export async function generateLink(longLink) {
   return new Promise((resolve) => {
