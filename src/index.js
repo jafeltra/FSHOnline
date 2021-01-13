@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter basename="/FSHOnline">
+    <BrowserRouter basename="">
       <AppRouter />
     </BrowserRouter>
   </React.StrictMode>,
