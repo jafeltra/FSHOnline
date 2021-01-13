@@ -6,10 +6,10 @@ import SimpleComponent from '../components/SimpleComponent';
 export default function AppRouter(props) {
   return (
     <Switch>
-      <Route path="/FSHOnline/share/test" exact component={SimpleComponent} />
-      <Route path="/FSHOnline/share/:text" component={App} />
-      <Route path="/FSHOnline/test" exact component={SimpleComponent} />
-      <Route path="/FSHOnline" exact component={App} />
+      <Route path="/share/test" exact component={SimpleComponent} />
+      <Route path="/share/:text" component={App} />
+      <Route path="/test" exact component={SimpleComponent} />
+      <Route path="" exact component={App} />
     </Switch>
   );
 }
