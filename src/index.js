@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import AppRouter from './utils/AppRouter';
 import * as serviceWorker from './serviceWorker';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <HashRouter basename="/FSHOnline">
+    <BrowserRouter basename="/FSHOnline">
       <AppRouter />
-    </HashRouter>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
