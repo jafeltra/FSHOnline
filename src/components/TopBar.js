@@ -42,7 +42,7 @@ export default function TopBar() {
             <Box order={2} alignSelf="center" m={1}>
               <StylesProvider injectFirst>
                 <Typography order={1} className={classes.title}>
-                  FSH ONLINE
+                  FSH ONLINE test
                 </Typography>
                 <Typography order={2} classes={{ root: 'versionText' }}>
                   Powered by SUSHI v1.3.2 and GoFSH v1.1.0
