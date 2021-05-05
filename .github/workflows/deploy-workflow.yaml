@@ -3,7 +3,7 @@ name: Deploy to GH Pages
 on:
   push:
     branches:
-      - master
+      - temp-file-explorer-updates
 
 jobs:
   deploy-to-pages:
