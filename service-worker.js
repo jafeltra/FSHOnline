@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/FSHOnline/precache-manifest.cd88a4f30a20aeda97be30caf9c82532.js"
+  "/FSHOnline/precache-manifest.979d6a29f04a7d9f896ae719b3aa094d.js"
 );
 
 self.addEventListener('message', (event) => {
