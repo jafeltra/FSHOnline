@@ -12,31 +12,12 @@
   color: white;
 }
 
-/* .react-codemirror2 > .CodeMirror div.CodeMirror-vscrollbar::-webkit-scrollbar {
-  width: 10px;
-  height: 12px;
+.react-codemirror2 > .CodeMirror .CodeMirror-overlayscroll-horizontal div,
+.react-codemirror2 > .CodeMirror .CodeMirror-overlayscroll-vertical div {
+  background: #121d21b3; /* Transparent color to match editor - mirrors what Mac does by default */
 }
-.react-codemirror2 > .CodeMirror div.CodeMirror-vscrollbar::-webkit-scrollbar-track {
-  background-color: transparent;
-  border-radius: 5px;
-}
-.react-codemirror2 > .CodeMirror div.CodeMirror-vscrollbar::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #121D21B3;
-}
-.react-codemirror2 > .CodeMirror div.CodeMirror-hscrollbar::-webkit-scrollbar {
-  width: 12px;
-  height: 10px;
-}
-.react-codemirror2 > .CodeMirror div.CodeMirror-hscrollbar::-webkit-scrollbar-track {
-  background-color: transparent;
-  border-radius: 5px;
-}
-.react-codemirror2 > .CodeMirror div.CodeMirror-hscrollbar::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #121D21B3;
-}*/
 
-.react-codemirror2 > .CodeMirror div.CodeMirror-scrollbar-filler {
-  display: none !important;
+.react-codemirror2 > .CodeMirror .CodeMirror-scrollbar-filler {
+  background: #263238; /* Match the editor color */
 }
+
