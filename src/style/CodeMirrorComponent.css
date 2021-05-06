@@ -12,7 +12,7 @@
   color: white;
 }
 
-.react-codemirror2 > .CodeMirror div.CodeMirror-vscrollbar::-webkit-scrollbar {
+/* .react-codemirror2 > .CodeMirror div.CodeMirror-vscrollbar::-webkit-scrollbar {
   width: 10px;
   height: 12px;
 }
@@ -25,8 +25,8 @@
   background-color: #121D21B3;
 }
 .react-codemirror2 > .CodeMirror div.CodeMirror-hscrollbar::-webkit-scrollbar {
-  width: 10px;
-  height: 12px;
+  width: 12px;
+  height: 10px;
 }
 .react-codemirror2 > .CodeMirror div.CodeMirror-hscrollbar::-webkit-scrollbar-track {
   background-color: transparent;
@@ -38,4 +38,4 @@
 }
 .react-codemirror2 > .CodeMirror div.CodeMirror-scrollbar-filler {
   display: none;
-}
+} */
