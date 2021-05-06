@@ -11,3 +11,13 @@
 .react-codemirror2 > .CodeMirror span.CodeMirror-foldmarker {
   color: white;
 }
+
+.react-codemirror2 > .CodeMirror div.CodeMirror-vscrollbar {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.react-codemirror2 > .CodeMirror div.CodeMirror-hscrollbar {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.react-codemirror2 > .CodeMirror div.CodeMirror-scrollbar-filler {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}

@@ -9,25 +9,29 @@ body {
 ::-webkit-scrollbar:focus,
 ::-webkit-scrollbar:hover { */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 12px;
+  /* width: 10px;
+  height: 12px; */
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
 /* ::-webkit-scrollbar-track:active,
 ::-webkit-scrollbar-track:focus,
 ::-webkit-scrollbar-track:hover { */
 ::-webkit-scrollbar-track {
-  background-color: transparent;
-  border-radius: 5px;
+  /* background-color: transparent;
+  border-radius: 5px; */
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
 /* ::-webkit-scrollbar-thumb:active,
 ::-webkit-scrollbar-thumb:focus,
 ::-webkit-scrollbar-thumb:hover { */
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #121D21B3;
+  /* border-radius: 10px;
+  background-color: #121D21B3; */
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+
 
 pre,
 code {
