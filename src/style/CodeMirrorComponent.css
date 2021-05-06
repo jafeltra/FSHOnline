@@ -35,7 +35,8 @@
 .react-codemirror2 > .CodeMirror div.CodeMirror-hscrollbar::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #121D21B3;
-}
+}*/
+
 .react-codemirror2 > .CodeMirror div.CodeMirror-scrollbar-filler {
-  display: none;
-} */
+  display: none !important;
+}
