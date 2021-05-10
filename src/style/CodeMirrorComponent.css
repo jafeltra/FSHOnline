@@ -12,11 +12,13 @@
   color: white;
 }
 
-.react-codemirror2 > .CodeMirror .CodeMirror-overlayscroll-horizontal div {
+.react-codemirror2 > .CodeMirror .CodeMirror-overlayscroll-horizontal {
   height: 10px;
+  margin: 3px;
 }
-.react-codemirror2 > .CodeMirror .CodeMirror-overlayscroll-vertical div {
+.react-codemirror2 > .CodeMirror .CodeMirror-overlayscroll-vertical {
   width: 10px;
+  margin: 5px;
 }
 
 .react-codemirror2 > .CodeMirror .CodeMirror-overlayscroll-horizontal div,
